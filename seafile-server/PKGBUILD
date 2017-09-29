@@ -12,8 +12,10 @@ license=('AGPL3')
 makedepends=("vala" "intltool")
 depends=("seafile" "wget" "sqlite" "fuse" "ccnet-server" "libarchive"
          "libevhtp-seafile" "git" "ffmpeg"
-         "python2-requests" "python2-flup"
-         "python2-setuptools" "python2-pillow" "mysql-python")
+         "python2-requests" "python2-flup")
+optdepends=("python2-setuptools: MySQL setup"
+            "python2-pillow: MySQL setup"
+            "mysql-python: MySQL setup")
 source=("${pkgname}-${pkgver}-server.tar.gz::${url}/archive/v${pkgver}-server.tar.gz"
         "seafile-admin_virtualenv.patch"
         "seafile-server@.service"
