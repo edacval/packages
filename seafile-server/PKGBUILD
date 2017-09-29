@@ -13,9 +13,9 @@ makedepends=("vala" "intltool")
 depends=("seafile" "wget" "sqlite" "fuse" "ccnet-server" "libarchive"
          "libevhtp-seafile" "git" "ffmpeg"
          "python2-requests" "python2-flup")
-optdepends=("python2-setuptools: MySQL setup"
-            "python2-pillow: MySQL setup"
-            "mysql-python: MySQL setup")
+optdepends=("python2-setuptools: MySQL deploying"
+            "python2-pillow: MySQL deploying"
+            "mysql-python: MySQL deploying")
 source=("${pkgname}-${pkgver}-server.tar.gz::${url}/archive/v${pkgver}-server.tar.gz"
         "seafile-admin_virtualenv.patch"
         "seafile-server@.service"
