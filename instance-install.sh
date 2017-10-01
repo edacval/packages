@@ -1,6 +1,5 @@
 #!/bin/bash
 
-#---------------------------------- VARS --------------------------------------#
 
 if [ $EUID -ne 0 ]; then
     echo 'Need administrator privileges'
@@ -17,8 +16,6 @@ read -rp 'MySQL user: ' MYSQL_USER
 read -rsp "MySQL ${MYSQL_USER} password: " MYSQL_USER_PASS; printf "\n"
 read -rsp 'MySQL root password: ' MYSQL_ROOT_PASS; printf "\n"
 
-with_seafile='sudo -u seafile'
-
 #---------------------------------- MAIN --------------------------------------#
 
 # Make work directory
@@ -27,6 +24,8 @@ if ! [ -d "${WORK_DIR}" ]; then
     useradd -m -r -d /home/seafile -s /usr/bin/nologin seafile || exit 1
     printf "Done\n"
 fi
+
+with_seafile='sudo -u seafile'
 
 # Make instance directory
 printf "Making %s Directory... " "${WORK_DIR}/${INSTANCE_NAME}"
