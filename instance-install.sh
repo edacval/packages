@@ -58,9 +58,10 @@ ${with_seafile} ./seafile-server/setup-seafile-mysql.sh auto \
 
 # Installation
 ${with_seafile} seafile-admin setup || exit 1
-
-# Create-admin
 ${with_seafile} seafile-admin start || exit 1
+echo ''
+echo 'Creating an administrator user'
+echo '------------------------------'
 ${with_seafile} seafile-admin create-admin
 ${with_seafile} seafile-admin stop
 
