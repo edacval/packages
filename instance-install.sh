@@ -6,41 +6,61 @@ if [ $EUID -ne 0 ]; then
 fi
 
 WORK_DIR='/home/seafile'
-
 read -rp 'Instance name: ' INSTANCE_NAME
 if [ -d  "${WORK_DIR}/${INSTANCE_NAME}" ]; then
     echo "Error: Instance ${INSTANCE_NAME} already exist"
     exit 1
 fi
 
+read -rp 'MySQL user: ' MYSQL_USER
+read -rsp "MySQL ${MYSQL_USER} password: " MYSQL_USER_PASS; printf "\n"
+read -rsp 'MySQL root password: ' MYSQL_ROOT_PASS; printf "\n"
+
+with_seafile='sudo -u seafile'
+
 #--------------------------------- MAIN ---------------------------------------#
 
 # Make work directory
 if ! [ -d "${WORK_DIR}" ]; then
     printf "Making %s Directory... " "${WORK_DIR}"
-    useradd -m -r -d /home/seafile -s /usr/bin/nologin seafile
+    useradd -m -r -d /home/seafile -s /usr/bin/nologin seafile || exit 1
     printf "Done\n"
 fi
 
 # Make instance directory
 printf "Making %s Directory... " "${WORK_DIR}/${INSTANCE_NAME}"
-mkdir -p "${WORK_DIR}/${INSTANCE_NAME}"
+$(with_seafile) mkdir -p "${WORK_DIR}/${INSTANCE_NAME}"
 cd "${WORK_DIR}/${INSTANCE_NAME}" || exit 1
 printf "Done\n"
 
 # Import server
 printf "Importing seafile-server in %s... " "${WORK_DIR}/${INSTANCE_NAME}"
-cp -r /usr/share/seafile-server/ ./
+$(with_seafile) cp -r /usr/share/seafile-server/ ./ || exit 1
 printf "Done\n"
 
 # MySQL install
 # https://manual.seafile.com/deploy/using_mysql.html
-./seafile-server/setup-seafile-mysql.sh || exit 1
+$(with_seafile) ./seafile-server/setup-seafile-mysql.sh auto \
+    --server-name 'seafile' \
+    --server-ip '127.0.0.1' \
+    --fileserver-port '8082' \
+    --seafile-dir "${WORK_DIR}/${INSTANCE_NAME}/seafile-data/" \
+    --use-existing-db '0' \
+    --mysql-host '127.0.0.1' \
+    --mysql-port '3306' \
+    --mysql-user "${MYSQL_USER}" \
+    --mysql-user-passwd "${MYSQL_USER_PASS}" \
+    --mysql-user-host '127.0.0.1' \
+    --mysql-root-passwd "${MYSQL_ROOT_PASS}" \
+    --ccnet-db 'ccnet-db' \
+    --seafile-db 'seafile-db' \
+    --seahub-db 'seahub-db' || exit 1
 
 # Create-admin
-seafile-admin start
-seafile-admin create-admin
-seafile-admin stop
+$(with_seafile) \
+    seafile-admin start; \
+    seafile-admin create-admin; \
+    seafile-admin stop
 
 # Systemd service
 # https://manual.seafile.com/deploy/start_seafile_at_system_bootup.html
@@ -50,7 +70,7 @@ if ! [ -f "${SERVICE_PATH}" ]; then
     printf "Write service %s... " "${SERVICE_PATH}"
     cat <<EOF > "${SERVICE_PATH}"
 [Unit]
-Description=Next-generation open source cloud storage with advanced features on privacy protection and teamwork.
+Description=Next-generation open source cloud storage.
 After=syslog.target network.target
 
 [Service]
@@ -65,10 +85,8 @@ User=seafile
 WantedBy=multi-user.target
 EOF
     printf "Done\n"
+    systemctl daemon-reload # !Important
 fi
-
-chown -R seafile:seafile /tmp/seahub*   # !Important
-chown -R seafile:seafile "${WORK_DIR}"  # !Important
 
 echo 'Success! You can start:'
 echo "systemctl start seafile-server@${INSTANCE_NAME}"
