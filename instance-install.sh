@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#---------------------------------- VARS --------------------------------------#
+
 if [ $EUID -ne 0 ]; then
     echo 'Need administrator privileges'
     exit 1
@@ -17,7 +19,7 @@ read -rsp 'MySQL root password: ' MYSQL_ROOT_PASS; printf "\n"
 
 with_seafile='sudo -u seafile'
 
-#--------------------------------- MAIN ---------------------------------------#
+#---------------------------------- MAIN --------------------------------------#
 
 # Make work directory
 if ! [ -d "${WORK_DIR}" ]; then
