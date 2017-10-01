@@ -28,19 +28,19 @@ fi
 
 # Make instance directory
 printf "Making %s Directory... " "${WORK_DIR}/${INSTANCE_NAME}"
-"${with_seafile}" mkdir -p "${WORK_DIR}/${INSTANCE_NAME}" || exit 1
+${with_seafile} mkdir -p "${WORK_DIR}/${INSTANCE_NAME}" || exit 1
 printf "Done\n"
 
 cd "${WORK_DIR}/${INSTANCE_NAME}" || exit 1
 
 # Import server
 printf "Importing seafile-server in %s... " "${WORK_DIR}/${INSTANCE_NAME}"
-"${with_seafile}" cp -r /usr/share/seafile-server/ ./ || exit 1
+${with_seafile} cp -r /usr/share/seafile-server/ ./ || exit 1
 printf "Done\n"
 
 # MySQL install
 # https://manual.seafile.com/deploy/using_mysql.html
-"${with_seafile}" ./seafile-server/setup-seafile-mysql.sh auto \
+${with_seafile} ./seafile-server/setup-seafile-mysql.sh auto \
     --server-name 'seafile' \
     --server-ip '127.0.0.1' \
     --fileserver-port '8082' \
@@ -57,10 +57,9 @@ printf "Done\n"
     --seahub-db 'seahub-db' || exit 1
 
 # Create-admin
-"${with_seafile}" \
-    seafile-admin start; \
-    seafile-admin create-admin; \
-    seafile-admin stop
+${with_seafile} seafile-admin start
+${with_seafile} seafile-admin create-admin
+${with_seafile} seafile-admin stop
 
 # Systemd service
 # https://manual.seafile.com/deploy/start_seafile_at_system_bootup.html
