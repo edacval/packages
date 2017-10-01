@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 if [ $EUID -ne 0 ]; then
     echo 'Need administrator privileges'
     exit 1
@@ -57,8 +56,11 @@ ${with_seafile} ./seafile-server/setup-seafile-mysql.sh auto \
     --seafile-db 'seafile-db' \
     --seahub-db 'seahub-db' || exit 1
 
+# Installation
+${with_seafile} seafile-admin setup || exit 1
+
 # Create-admin
-${with_seafile} seafile-admin start
+${with_seafile} seafile-admin start || exit 1
 ${with_seafile} seafile-admin create-admin
 ${with_seafile} seafile-admin stop
 
@@ -91,4 +93,3 @@ fi
 echo 'Success! You can start:'
 echo "systemctl start seafile-server@${INSTANCE_NAME}"
 echo 'Webadmin http://127.0.0.1:8000'
-exit 0
