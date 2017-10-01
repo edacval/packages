@@ -26,3 +26,17 @@
              os.path.join(self.install_path, 'seahub'),
              os.path.join(self.install_path, 'runtime'),
          ]
+--- a/tools/seafile-admin
++++ b/tools/seafile-admin
+@@ -857,6 +861,10 @@
+     files = [
+         os.path.join(cwd, 'conf', 'ccnet.conf'),
+         os.path.join(cwd, 'seafile-server', 'runtime', 'seahub.conf'),
+-        os.path.join(cwd, 'seahub.db'),
++        # os.path.join(cwd, 'seahub.db'),  # This line is not util with mysql 
++                                           # and crash daemon starting
++                                           # I don't find a clean method for
++                                           # determinate if mysql is starting
++                                           # Your suggestions are welcome
+         os.path.join(cwd, 'conf', 'seahub_settings.py'),
+     ]
