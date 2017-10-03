@@ -28,15 +28,14 @@
          ]
 --- a/tools/seafile-admin
 +++ b/tools/seafile-admin
-@@ -857,6 +861,10 @@
-     files = [
-         os.path.join(cwd, 'conf', 'ccnet.conf'),
-         os.path.join(cwd, 'seafile-server', 'runtime', 'seahub.conf'),
--        os.path.join(cwd, 'seahub.db'),
-+        # os.path.join(cwd, 'seahub.db'),  # This line is not util with mysql 
-+                                           # and crash daemon starting
-+                                           # I don't find a clean method for
-+                                           # determinate if mysql is starting
-+                                           # Your suggestions are welcome
-         os.path.join(cwd, 'conf', 'seahub_settings.py'),
-     ]
+@@ -864,3 +864,10 @@
++    # seahub.db is useless with MySQL and crash the startup!
++    with open(files[3], 'r') as f:
++        for line in f:
++            if 'DATABASES' in line:
++                del(files[2])
++                break
++
+     for fpath in files:
+         if not os.path.exists(fpath):
+             error('%s not found' % fpath)
