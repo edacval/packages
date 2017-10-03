@@ -79,7 +79,7 @@ After=syslog.target network.target
 [Service]
 Type=forking
 WorkingDirectory=/home/seafile/%i
-ExecStart=/usr/bin/seafile-admin start # --fastcgi
+ExecStart=/usr/bin/seafile-admin start
 ExecStop=/usr/bin/seafile-admin stop
 PIDFile=/home/seafile/%i/seafile-data/pids/seaf-server.pid
 User=seafile
