@@ -58,7 +58,6 @@ ${with_seafile} ./seafile-server/setup-seafile-mysql.sh auto \
     --seahub-db 'seahub-db' || exit 1
 
 # Installation
-#${with_seafile} seafile-admin setup || exit 1
 ${with_seafile} seafile-admin start || exit 1
 echo ''
 echo 'Creating an administrator user'
