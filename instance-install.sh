@@ -21,6 +21,7 @@ read -rsp 'MySQL root password: ' MYSQL_ROOT_PASS; printf "\n"
 if ! [ -d "${WORK_DIR}" ]; then
     printf "Making %s Directory... " "${WORK_DIR}"
     useradd -m -r -d /home/seafile -s /usr/bin/nologin seafile || exit 1
+    chmod 755 "${WORK_DIR}" # !Important
     printf "Done\n"
 fi
 
@@ -91,6 +92,5 @@ EOF
     systemctl daemon-reload # !Important
 fi
 
-echo 'Success! You can start:'
+echo 'Success! You can configure nginx and then start:'
 echo "systemctl start seafile-server@${INSTANCE_NAME}"
-echo 'Webadmin http://127.0.0.1:8000'
