@@ -1,15 +1,3 @@
---- a/scripts/setup-seafile-mysql.py
-+++ b/scripts/setup-seafile-mysql.py
-@@ -173,2 +173,7 @@
--        return os.environ['PYTHON']
--
-+        try:
-+            python_executable = os.environ['PYTHON']
-+        except KeyError:
-+            return sys.executable
-+        else:
-+            return python_executable
-+
 @@ -304,14 +304,13 @@
 -        self.bin_dir = os.path.join(self.install_path, 'seafile', 'bin')
 +        self.bin_dir = '/usr/bin'
