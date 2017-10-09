@@ -17,7 +17,7 @@ sha256sums=('e0c37aaad086e8e9ec987ea35a75107b0375d924c24136e5f56995a916c54b1a')
 package() {
     cd "$srcdir/$pkgname-$pkgver"
     
-	python setup.py install --root="${pkgdir}" --optimize=1
-	install -Dm644 "${srcdir}/${pkgname}-${pkgver}/LICENSE" \
-				   "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+    python setup.py install --root="${pkgdir}" --optimize=1
+    install -Dm644 "${srcdir}/${pkgname}-${pkgver}/LICENSE" \
+		   "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
