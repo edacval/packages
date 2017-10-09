@@ -1,0 +1,23 @@
+# Maintainer: joffrey <j-off@live.fr>
+
+pkgname='django-pylibmc'
+pkgver='0.6.1'
+pkgrel=1
+pkgdesc='Memcached cache backend for Django using pylibmc'
+arch=('any')
+url="https://github.com/${pkgname}/${pkgname}/"
+license=('custom:BSD3')
+depends=('python' 'python2' 'python-pylibmc')
+makedepends=('git' 'python-setuptools')
+conflicts=("${pkgname}-git")
+source=("https://github.com/${pkgname}/${pkgname}/archive/v${pkgver}.tar.gz")
+md5sums=('58d0e2250be9f0edffce2cc9ec21b453')
+sha256sums=('e0c37aaad086e8e9ec987ea35a75107b0375d924c24136e5f56995a916c54b1a')
+
+package() {
+    cd "$srcdir/$pkgname-$pkgver"
+    
+	python setup.py install --root="${pkgdir}" --optimize=1
+	install -Dm644 "${srcdir}/${pkgname}-${pkgver}/LICENSE" \
+				   "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}
