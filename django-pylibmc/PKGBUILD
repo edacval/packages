@@ -1,4 +1,4 @@
-# Maintainer: joffrey <j-off@live.fr>
+# Maintainer: joffrey <joffrey.darcq@sfr.fr>
 
 pkgname=('python-django-pylibmc' 'python2-django-pylibmc')
 pkgver='0.6.1'
