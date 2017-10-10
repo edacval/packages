@@ -1,23 +1,30 @@
 # Maintainer: joffrey <j-off@live.fr>
 
-pkgname='django-pylibmc'
+pkgname=('python-django-pylibmc' 'python2-django-pylibmc')
 pkgver='0.6.1'
 pkgrel=1
 pkgdesc='Memcached cache backend for Django using pylibmc'
 arch=('any')
-url="https://github.com/${pkgname}/${pkgname}/"
-license=('custom:BSD')
-depends=('python-pylibmc')
-makedepends=('git' 'python-setuptools')
-conflicts=("${pkgname}-git")
-source=("https://github.com/${pkgname}/${pkgname}/archive/v${pkgver}.tar.gz")
+url='https://github.com/django-pylibmc/django-pylibmc/'
+license=('BSD')
+depends=('python-pylibmc>=1.4.1')
+makedepends=('python-setuptools' 'python2-setuptools')
+source=("https://github.com/django-pylibmc/django-pylibmc/archive/v${pkgver}.tar.gz")
 md5sums=('58d0e2250be9f0edffce2cc9ec21b453')
 sha256sums=('e0c37aaad086e8e9ec987ea35a75107b0375d924c24136e5f56995a916c54b1a')
 
-package() {
-    cd "$srcdir/$pkgname-$pkgver"
+package_python-django-pylibmc() {
+    cd "${srcdir}/django-pylibmc-${pkgver}" 
     
     python setup.py install --root="${pkgdir}" --optimize=1
-    install -Dm644 "${srcdir}/${pkgname}-${pkgver}/LICENSE" \
-		   "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+    install -Dm644 "${srcdir}/django-pylibmc-${pkgver}/LICENSE" \
+                   "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}
+
+package_python2-django-pylibmc() {
+    cd "${srcdir}/django-pylibmc-${pkgver}"
+    
+    python2 setup.py install --root="${pkgdir}" --optimize=1
+    install -Dm644 "${srcdir}/django-pylibmc-${pkgver}/LICENSE" \
+                   "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
