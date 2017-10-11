@@ -14,8 +14,8 @@ sha256sums=('e0c37aaad086e8e9ec987ea35a75107b0375d924c24136e5f56995a916c54b1a')
 
 package_python-django-pylibmc() {
     depends=('python-pylibmc>=1.4.1')
-    cd "${srcdir}/django-pylibmc-${pkgver}" 
     
+    cd "${srcdir}/django-pylibmc-${pkgver}"
     python setup.py install --root="${pkgdir}" --optimize=1
     install -Dm644 "${srcdir}/django-pylibmc-${pkgver}/LICENSE" \
                    "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
@@ -23,8 +23,8 @@ package_python-django-pylibmc() {
 
 package_python2-django-pylibmc() {
     depends=('python2-pylibmc>=1.4.1')
-    cd "${srcdir}/django-pylibmc-${pkgver}"
     
+    cd "${srcdir}/django-pylibmc-${pkgver}"
     python2 setup.py install --root="${pkgdir}" --optimize=1
     install -Dm644 "${srcdir}/django-pylibmc-${pkgver}/LICENSE" \
                    "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
