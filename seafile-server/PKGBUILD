@@ -31,7 +31,7 @@ sha256sums=('9f3b5803c59af6fb1431e40951c800bf08d17b6a7cc3c1307359891b7199a388'
             'b1748e826d8e7cccdd825b99864b74dfb5795312f8878d63e9a87105f4382e29'
             'a2d7f7cf0c59aba97650af62b3cefd0ceb71a1007c34d9369a88e5769c7f6076'
             'ffa351b22e89a66f80139888e4e7a2c2bde41fd648d57c71dcf10884dc03bbc3'
-            '38bb5a3ab98dcd9a881e04b2f335461ae51f59a8f8d9b94839928fcd48c469d8')
+            '67da9dff7e1620041eb5a5e3dbb5c61457c2106e5fbb57db06e6f061a0d63c7d')
 
 prepare () {
     cd "${srcdir}/${pkgname}-${pkgver}-server"
