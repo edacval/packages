@@ -1,5 +1,5 @@
 post_upgrade() {
-    echo "For upgrade don't forget to execute:"
+    echo "For upgrade execute:"
     echo 'seahub-preupgrade'
     echo 'In your seafile-server instance directory'
 }
