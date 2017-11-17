@@ -15,7 +15,8 @@ md5sums=('76efb009cb04a5abb9c729818e770669')
 sha256sums=('08b5412a2c81b4a718b7ebe8e8e957ed4a035ff6d03612b7b65088ab92985bac')
 
 package() {
-    mkdir -p "${pkgdir}/usr/share/${pkgbase}"
-    cp -dr --no-preserve=ownership "${srcdir}/${gitname}-${pkgver}" \
-        "${pkgdir}/usr/share/${pkgbase}/${pkgname}"
+    cd "${srcdir}/${gitname}-${pkgver}/"
+    
+    install -dm755 "${pkgdir}/usr/share/${pkgbase}/${pkgname}"
+    install -m644 ./* "${pkgdir}/usr/share/${pkgbase}/${pkgname}/"
 }
