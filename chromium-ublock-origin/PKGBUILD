@@ -20,6 +20,7 @@ build() {
     
     ./tools/make-chromium.sh
 }
+
 package() {
     cd "${srcdir}/${gitname}-${pkgver}"
     
