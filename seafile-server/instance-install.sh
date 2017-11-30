@@ -91,5 +91,5 @@ EOF
     systemctl daemon-reload # !Important
 fi
 
-echo 'Success! You can configure nginx and then start:'
-echo "systemctl start seafile-server@${INSTANCE_NAME}"
+echo 'Success! You can configure nginx and start:'
+echo "systemctl start seafile-server@${INSTANCE_NAME}.service"
