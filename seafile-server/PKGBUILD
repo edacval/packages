@@ -3,7 +3,7 @@
 # Contributor: Aaron Lindsay <aaron@aclindsay.com>
 
 pkgname=seafile-server
-pkgver=6.2.2
+pkgver=6.2.3
 pkgrel=1
 pkgdesc="Seafile is an online file storage and collaboration tool"
 arch=('i686' 'x86_64' 'armv7h' 'armv6h' 'aarch64')
@@ -22,16 +22,25 @@ source=("${pkgname}-${pkgver}-server.tar.gz::${url}/archive/v${pkgver}-server.ta
         "create-default-conf-dir.patch"
         "0001-Revert-server-put-pids-folder-out-of-seafile-data.patch"
         "libseafile.in.patch"
-        "openssl-1.1.diff"
-        "mysql-setup.patch")
-sha256sums=('9f3b5803c59af6fb1431e40951c800bf08d17b6a7cc3c1307359891b7199a388'
+        "openssl-1.1.diff")
+sha256sums=('77bfc8a0037d37588edf96e46b3975453ff6e48a06b4343ce97d9381618cc111'
             '52fb29858f6424052cf01630ad72b5687a4fb259f23f9efc97f08be04a883218'
-            'da31d1b61031cbacc42e1ab708c67c83dba933ff391b07677dabab7ab79729f4'
+            'b33b9299370954145d70991abe0084c8b19c5c07233b35e62ae16c9c1ce7c0e9'
             '6bd632f8741b039bad961af3d6850b651e25b7e7a3018d6e2789f350ff93bb78'
             'b1748e826d8e7cccdd825b99864b74dfb5795312f8878d63e9a87105f4382e29'
             'a2d7f7cf0c59aba97650af62b3cefd0ceb71a1007c34d9369a88e5769c7f6076'
-            'ffa351b22e89a66f80139888e4e7a2c2bde41fd648d57c71dcf10884dc03bbc3'
-            '67da9dff7e1620041eb5a5e3dbb5c61457c2106e5fbb57db06e6f061a0d63c7d')
+            'ffa351b22e89a66f80139888e4e7a2c2bde41fd648d57c71dcf10884dc03bbc3')
+
+# mysql-setup.patch is an unofficial patch 
+# It isn't mandatory for a simple installation with SQLite
+# For apply it, uncomment MYSQL_SETUP_PATCH variable
+#       |   |   |
+#       V   V   V
+#MYSQL_SETUP_PATCH=true
+if [[ ${MYSQL_SETUP_PATCH} ]]; then
+    source+=('https://raw.githubusercontent.com/jojotango/packages/master/seafile-server/mysql-setup.patch')
+    sha256sums+=('67da9dff7e1620041eb5a5e3dbb5c61457c2106e5fbb57db06e6f061a0d63c7d')
+fi
 
 prepare () {
     cd "${srcdir}/${pkgname}-${pkgver}-server"
@@ -41,7 +50,7 @@ prepare () {
     patch -p1 -i "${srcdir}/create-default-conf-dir.patch"
     patch -p1 -i "${srcdir}/libseafile.in.patch"
     patch -p1 -i "${srcdir}/openssl-1.1.diff"
-    patch -p1 -i "${srcdir}/mysql-setup.patch"
+    [[ ${MYSQL_SETUP_PATCH} ]] && patch -p1 -i "${srcdir}/mysql-setup.patch"
 
     # Fix all script's python 2 requirement
     grep -s -l -r '#!/usr/bin/env python\b' "${srcdir}/${pkgname}-${pkgver}-server" \
