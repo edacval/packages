@@ -3,18 +3,20 @@
 # Contributor: Aaron Lindsay <aaron@aclindsay.com>
 
 pkgname=seahub
-pkgver=6.2.2
+pkgver=6.2.3
 pkgrel=1
 pkgdesc="The web end of seafile server"
 arch=('i686' 'x86_64' 'armv7h' 'armv6h' 'aarch64')
 url="https://github.com/haiwen/${pkgname}"
 license=('Apache')
 depends=("seafile-server" "python2-virtualenv")
+optdepends=("memcached: Add memcached"
+            "python2-django-pylibmc: Add memcached")
 makedepends=('python2-pip')
 install="${pkgname}.install"
 source=("${pkgname}-${pkgver}-server.tar.gz::${url}/archive/v${pkgver}-server.tar.gz"
-        "seahub-preupgrade")
-sha256sums=('04398c57bd4fa17050530ab47d4f1410196f3cd925d7c1067af00e0c848a3799'
+        "https://raw.githubusercontent.com/jojotango/packages/master/seahub/seahub-preupgrade")
+sha256sums=('5111945fb226a6cc315468df1d60958e78d75a43c817b7f0d1569070f3ebce34'
             '9c1f68c2e7af52f51a77733c869552c7c2d809f78758ca5dedc13f79d46f0324')
 # Strip is not happy on precompiled libs in virtualenv, temporary disable
 options=("!strip")
@@ -31,11 +33,11 @@ package() {
   # Install seahub
   install -dm755 "${pkgdir}/usr/share/seafile-server/seahub"
   cp -r -p "${srcdir}/seahub-${pkgver}-server/"* \
-    "${pkgdir}/usr/share/seafile-server/seahub/"
+           "${pkgdir}/usr/share/seafile-server/seahub/"
 
   # Install seahub preupgrade script
   install -D -m755 "${srcdir}/seahub-preupgrade" \
-    "${pkgdir}/usr/bin/seahub-preupgrade"
+                   "${pkgdir}/usr/bin/seahub-preupgrade"
 
   # Create private virtualenv
   virtualenv2 --system-site-packages "${pkgdir}/usr/lib/seafile/seafileenv"
