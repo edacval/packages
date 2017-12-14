@@ -3,7 +3,7 @@
 gitname='uBO-Extra'
 pkgbase='chromium-addons'
 pkgname='chromium-ubo-extra'
-pkgver=2.56
+pkgver=2.58
 pkgrel=1
 pkgdesc="A companion extension to chromium-ublock-origin to gain ability to foil early anti-user mechanisms"
 arch=('any')
@@ -11,8 +11,8 @@ url="https://github.com/gorhill/${gitname}"
 license=('GPL3')
 conflicts=('chromium-ubo-extra-git')
 source=("https://github.com/gorhill/${gitname}/archive/${pkgver}.tar.gz")
-md5sums=('76efb009cb04a5abb9c729818e770669')
-sha256sums=('08b5412a2c81b4a718b7ebe8e8e957ed4a035ff6d03612b7b65088ab92985bac')
+md5sums=('2bae81612363072dcc364eea00ff7b9e')
+sha256sums=('3ca8acbe1ebaf38ad5a220baf0e2699be080ddfa8277014b649a40d71e13e5ec')
 
 package() {
     cd "${srcdir}/${gitname}-${pkgver}/"
