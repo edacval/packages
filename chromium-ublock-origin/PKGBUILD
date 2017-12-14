@@ -3,7 +3,7 @@
 gitname='uBlock'
 pkgbase='chromium-addons'
 pkgname='chromium-ublock-origin'
-pkgver=1.14.18
+pkgver=1.14.20
 pkgrel=1
 pkgdesc="An efficient blocker for Chromium"
 arch=('any')
@@ -12,8 +12,8 @@ license=('GPL3')
 makedepends=('zip')
 conflicts=('chromium-ublock-origin-git')
 source=("https://github.com/gorhill/${gitname}/archive/${pkgver}.tar.gz")
-md5sums=('505fb5e7d7d0c154f8879b6b7586e17c')
-sha256sums=('3c766253fd92699afffe8c11a00671a2e5a891c7d77476fc47bfd36c98a41194')
+md5sums=('d912e53497aaab0165a6e171a364d00e')
+sha256sums=('6e21b9c31528aabdaec7779146b0e4d3286ee6d750c5b615bedabb72666192ec')
 
 build() {
     cd "${srcdir}/${gitname}-${pkgver}/"
